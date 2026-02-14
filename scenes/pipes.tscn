@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://cthjs4u2fq3x0"]
+
+[ext_resource type="Script" uid="uid://c1dt7nu1na66h" path="res://scripts/pipes.gd" id="1_3ahhd"]
+[ext_resource type="Texture2D" uid="uid://c2gptfgphvb7d" path="res://assets/Game Objects/pipe-green.png" id="2_prsvi"]
+[ext_resource type="PackedScene" uid="uid://bf6eem5gjgmpd" path="res://scenes/kill_area.tscn" id="3_prsvi"]
+[ext_resource type="Script" uid="uid://hjdu0nhdkn6y" path="res://scripts/point_counter.gd" id="4_v53nb"]
+[ext_resource type="AudioStream" uid="uid://b4rvv4bn2337d" path="res://assets/Sound Efects/point.wav" id="5_c66uf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v53nb"]
+size = Vector2(192, 1280)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_c66uf"]
+a = Vector2(96, -184)
+b = Vector2(96, 184)
+
+[node name="Pipes" type="Node2D"]
+script = ExtResource("1_3ahhd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 184)
+scale = Vector2(4, 4)
+texture = ExtResource("2_prsvi")
+offset = Vector2(0, 160)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(0, -184)
+rotation = 3.1415927
+scale = Vector2(4, 4)
+texture = ExtResource("2_prsvi")
+offset = Vector2(0, 160)
+flip_h = true
+
+[node name="Despawn Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="Kill Area" parent="." instance=ExtResource("3_prsvi")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kill Area"]
+position = Vector2(0, 824)
+shape = SubResource("RectangleShape2D_v53nb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Kill Area"]
+position = Vector2(0, -824)
+shape = SubResource("RectangleShape2D_v53nb")
+
+[node name="Point Counter" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("4_v53nb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Point Counter"]
+shape = SubResource("SegmentShape2D_c66uf")
+
+[node name="Point" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_c66uf")
+
+[connection signal="timeout" from="Despawn Timer" to="." method="_on_despawn_timer_timeout"]
+[connection signal="body_entered" from="Point Counter" to="Point Counter" method="_on_body_entered"]

@@ -5,7 +5,16 @@ extends Node
 
 @onready var score_label = $"../UI/Score"
 
+@onready var screen_ui = $"../UI/Message"
+
+@onready var spawn_timer = $"Spawn Timer"
 @onready var death_timer = $"Death Timer"
+
+var Bird_Scene = preload("uid://chm6nqk7egfpt")
+
+@onready var bird = Bird_Scene.instantiate()
+
+var Pipe_Scene = preload("uid://cthjs4u2fq3x0")
 
 @export var scroll_speed: float = 400
 @export var score: int = 0:
@@ -13,19 +22,21 @@ extends Node
 		if val > score: 
 			score = val
 			score_label.text = str(val)
+			
+@export var game_started = false:
+	set(val):
+		if val == true and game_over == false:
+			game_started = true
+			spawn_timer.start()
+			screen_ui.hide()
 		
-@export var game_over = false:
+var game_over = false:
 	set(val):
 		if val == true and game_over == false:
 			game_over = true
 			bird.is_alive = false
 			scroll_speed = 0
 			death_timer.start()
-
-var Bird_Scene = preload("uid://chm6nqk7egfpt")
-var Pipe_Scene = preload("uid://cthjs4u2fq3x0")
-
-@onready var bird = Bird_Scene.instantiate()
 	
 func _ready():
 	bird.GM = self

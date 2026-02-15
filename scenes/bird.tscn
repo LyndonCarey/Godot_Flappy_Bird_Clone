@@ -72,7 +72,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_jggmu"]
 resource_name = "Fall"
-length = 0.6
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -188,4 +188,4 @@ stream = ExtResource("7_hrcfq")
 libraries = {
 &"": SubResource("AnimationLibrary_hrcfq")
 }
-blend_times = [&"Death", &"Death", 0.2, &"Fall", &"Death", 0.2, &"Fall", &"Fall", 0.2, &"Fall", &"Jump", 0.05, &"Jump", &"Death", 0.2, &"Jump", &"Fall", 0.2, &"Jump", &"Jump", 0.05]
+blend_times = [&"Death", &"Death", 0.3, &"Fall", &"Death", 0.3, &"Fall", &"Fall", 0.3, &"Fall", &"Jump", 0.05, &"Jump", &"Death", 0.3, &"Jump", &"Fall", 0.3, &"Jump", &"Jump", 0.05]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cki6v863ioply"]
+[gd_scene load_steps=13 format=3 uid="uid://cki6v863ioply"]
 
 [ext_resource type="Texture2D" uid="uid://d03lf1dj21i6l" path="res://assets/Game Objects/background-day.png" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://cugbn4y7i5vf6" path="res://scripts/game_manager.gd" id="1_sugp2"]
@@ -15,6 +15,43 @@ font = ExtResource("6_tefeu")
 font_size = 128
 outline_size = 32
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_o6xl0"]
+resource_name = "Fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tipki"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85g3d"]
+_data = {
+&"Fade": SubResource("Animation_o6xl0"),
+&"RESET": SubResource("Animation_tipki")
+}
 
 [node name="Main" type="Node2D"]
 
@@ -104,6 +141,12 @@ scale = Vector2(4, 4)
 texture = ExtResource("7_o6xl0")
 region_enabled = true
 region_rect = Rect2(0, 102, 184, 165)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+root_node = NodePath("../Message")
+libraries = {
+&"": SubResource("AnimationLibrary_85g3d")
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

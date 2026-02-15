@@ -4,7 +4,6 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -1100.0
 @onready var spawn_pos = position
-var time = 0
 
 @onready var anim = $AnimationPlayer
 @onready var srpite = $AnimatedSprite2D
@@ -34,9 +33,8 @@ func _input(event):
 		jump()
 		
 func _process(delta):
-	time += 1*delta
 	if GM.game_started == false:
-		position = spawn_pos+Vector2.UP*32*sin(deg_to_rad(time*360))
+		position = spawn_pos+Vector2.UP*16*sin(deg_to_rad(GM.time*360))
 		
 	
 	

@@ -5,10 +5,12 @@ extends Node
 
 @onready var score_label = $"../UI/Score"
 
-@onready var screen_ui = $"../UI/Message"
+@onready var screen_ui = $"../UI/AnimationPlayer"
 
 @onready var spawn_timer = $"Spawn Timer"
 @onready var death_timer = $"Death Timer"
+
+var time = 0
 
 var Bird_Scene = preload("uid://chm6nqk7egfpt")
 
@@ -28,7 +30,7 @@ var Pipe_Scene = preload("uid://cthjs4u2fq3x0")
 		if val == true and game_over == false:
 			game_started = true
 			spawn_timer.start()
-			screen_ui.hide()
+			screen_ui.play("Fade")
 		
 var game_over = false:
 	set(val):
@@ -42,6 +44,9 @@ func _ready():
 	bird.GM = self
 	bird.position = Vector2(-200,0)
 	foreground.add_child(bird)
+	
+func _process(delta):
+	time += 1*delta
 
 func _on_spawn_timer_timeout():
 	if game_over == false:
